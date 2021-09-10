@@ -1,0 +1,36 @@
+module.exports = `
+type Query {
+  tasks(done: Boolean): [Task]
+  task(id: String): Task
+  service: Service!
+}
+
+type Mutation {
+  toggleTask(id: String!): Task
+  addTask(info: InputTask): Task
+}
+
+type Task {
+  _id: String
+  text: String
+  done: Boolean
+  tags: [Tag]
+}
+
+type Tag {
+  _id: String
+  text: String
+  weight: Int
+}
+
+input InputTask {
+  text: String!
+  done: Boolean = false
+}
+
+type Service {
+  name: String! # unique name for the service
+  version: String! # any string
+  schema: String! # the full schema for the service
+}
+`;

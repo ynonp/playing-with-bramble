@@ -1,0 +1,14 @@
+module.exports = `
+
+type Query {
+  fortune: String!
+  service: Service!
+}
+
+type Service {
+  name: String! # unique name for the service
+  version: String! # any string
+  schema: String! # the full schema for the service
+}
+
+`;

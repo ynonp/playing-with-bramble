@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  tasks-server:
+    build: ./tasks
+    command: ["wait-for-it", "tasks-db:27017", "--", "nodemon", "/app/bin/www"]
+    volumes:
+      - "./tasks:/app"
+
+  fortune:
+    build: ./fortune
+    command: ["nodemon", "/app/bin/www"]
+    volumes:
+      - "./fortune:/app"
+
+
+  tasks-db:
+    image: mongo:5
+    volumes:
+      - "./tasks-db/init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro"
+
+  gateway:
+    build: ./gateway
+    command: ["wait-for-it", "fortune:3000", "--", "wait-for-it", "tasks-server:3000", "--", "bramble", "-conf", "/config.json"]
+    ports:
+      - "8082:8082"
+    volumes:
+      - "./gateway/config.json:/config.json"
+

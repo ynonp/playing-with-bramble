@@ -1,0 +1,11 @@
+{
+  "services": [
+    "http://tasks-server:3000/graphql",
+    "http://fortune:3000/graphql"
+  ],
+  "plugins": [
+    {
+      "name": "playground"
+    }
+  ]
+}
